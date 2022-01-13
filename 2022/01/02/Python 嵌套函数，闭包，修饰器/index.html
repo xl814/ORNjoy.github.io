@@ -9,8 +9,6 @@
     
     <title>
         
-            Linux的网络配置问题 |
-        
         Keep enjoyment
     </title>
     
@@ -118,7 +116,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Linux的网络配置问题</span>
+            <span class="title-hover-animation"></span>
         </div>
 
         
@@ -137,21 +135,10 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2021-12-31 16:30:50</span>
-        <span class="mobile">2021-12-31 16:30</span>
+        <span class="pc">2022-01-02 12:06:16</span>
+        <span class="mobile">2022-01-02 12:06</span>
     </span>
     
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/Linux/">Linux</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -166,22 +153,25 @@
         
 
         <div class="article-content markdown-body">
-            <p>自己遇到了一个问题，但过程中几乎将所有查遍了所有各位可能能够遇到的问题：</p>
-<h3 id="虚拟机ping不通外网，ping不通主机时"><a href="#虚拟机ping不通外网，ping不通主机时" class="headerlink" title="虚拟机ping不通外网，ping不通主机时"></a>虚拟机ping不通外网，ping不通主机时</h3><p>检查你的vmware的NAT设置（如果你用的时NAT的话，而不是桥接），检查是否在一个子网内（主机，vmware，虚拟机），还有网关是否相同。之后如果大家采用的是虚拟机的静态网络配置的话，一定要注意我上面说的内容，虚拟机ip只要在子网里就行。这里就不贴图了，大家应该都能get到这些点吧。</p>
-<p>上述排查了之后没问题但还是连不了网的时候，看一下的vmware nat 和 dhcp(不知道这个有没有必要开)具体的话，win+r , 输入service.msc（好像是这个命令）, 找到上述这俩个任务，启动如果启动不了的话，回到vmware虚拟编辑网络设置里，恢复默认配置（需要你关闭虚拟机),恢复了好了之后<strong>子网号和网关都会发生变化</strong>（要注意），然后肯定就能没问题了.</p>
+            <h2 id="Python-嵌套函数，闭包，修饰器"><a href="#Python-嵌套函数，闭包，修饰器" class="headerlink" title="Python 嵌套函数，闭包，修饰器"></a>Python 嵌套函数，闭包，修饰器</h2><p>为了明白这三个概念，我试图从这个思路去理解：</p>
+<p>首先，什么是嵌套函数，很简单就是一个函数中定义另一个函数，这个内部的函数有可能会用到外部函数的一下变量。那如果同时这个内部函数会返回一个自身的对象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>():</span></span><br><span class="line">    name = <span class="string">&quot;python&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>():</span></span><br><span class="line">        <span class="built_in">print</span> name</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line">s = out() <span class="comment">#输出 inner的地址</span></span><br><span class="line">s() <span class="comment">#输出 Python</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>这就是一个闭包特性，准确来说这个inner()就被称为<strong>闭包函数</strong>，他要满足：</p>
+<p>1.嵌套函数</p>
+<p>2.需要引用外部函数的变量</p>
+<p>3.需要返回一个对象（没有括号相当于一个引用）</p>
+<p>有什么用呢？</p>
+<p>正常来说，一个python函数的执行应该是当outer()结束完了后，其保存在栈里的局部变量name应该是没了，可是为什么我们调用s()的时候依然好使呢，这就是闭包的特性，准确来说这就是python对于一个对象的管理是按引用的，当s = out()实际是将inner函数对象的地址（或者说引用）复制隔了s,因此当我们基本重新运行out()修改其name值时，那是不影响s()的name的值的。这就是闭包的作用，<strong>保持程序上一次运行后的状态继续执行</strong></p>
+<p>进一步说，python中修饰器的原理也就是这个了。我们知道设计原则中有一个开发封闭原则：就是在不修改原来代码的基础上进行功能的扩展，<strong>不能改变其源代码，调用方式也不能改变</strong>，这样，是否和上述的闭包特性贴合了。比如当我们想要输出一个time的时候</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTime</span>(<span class="params">func</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span> <span class="comment">#又是一个闭包</span></span><br><span class="line">    	func()</span><br><span class="line">    	<span class="built_in">print</span>(time.clock())</span><br><span class="line">    <span class="keyword">return</span> test </span><br><span class="line">getTime(outer())  <span class="comment">#这样实际改变了其调用方式，因为一开始是直接func()的</span></span><br><span class="line">s = out()</span><br><span class="line"><span class="comment">#以下注意</span></span><br><span class="line">s = getTime(s)</span><br><span class="line">s()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这就是装饰器，通过闭包特性得到的是一个函数的引用，有了这个引用我们可以当作要扩展功能函数的参数，但为了不修改其函数调用方式在赋值给这个引用，当然这个修饰器还有更复杂，厉害的应用，我也没有太深入了解，目前就先这样吧。</p>
 
         </div>
 
         
 
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/Linux/">#Linux</a>&nbsp;
-                    </li>
-                
-            </ul>
         
 
         
@@ -190,7 +180,7 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/12/31/Python%20%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D/"
+                           href="/2022/01/06/python%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
@@ -202,6 +192,21 @@
                         </a>
                     </div>
                 
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/01/%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
                 
             </div>
         

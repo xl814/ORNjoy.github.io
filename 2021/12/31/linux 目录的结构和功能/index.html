@@ -9,8 +9,6 @@
     
     <title>
         
-            Linux的网络配置问题 |
-        
         Keep enjoyment
     </title>
     
@@ -118,7 +116,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Linux的网络配置问题</span>
+            <span class="title-hover-animation"></span>
         </div>
 
         
@@ -137,21 +135,10 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2021-12-31 16:30:50</span>
-        <span class="mobile">2021-12-31 16:30</span>
+        <span class="pc">2021-12-31 16:49:56</span>
+        <span class="mobile">2021-12-31 16:49</span>
     </span>
     
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/Linux/">Linux</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -166,22 +153,81 @@
         
 
         <div class="article-content markdown-body">
-            <p>自己遇到了一个问题，但过程中几乎将所有查遍了所有各位可能能够遇到的问题：</p>
-<h3 id="虚拟机ping不通外网，ping不通主机时"><a href="#虚拟机ping不通外网，ping不通主机时" class="headerlink" title="虚拟机ping不通外网，ping不通主机时"></a>虚拟机ping不通外网，ping不通主机时</h3><p>检查你的vmware的NAT设置（如果你用的时NAT的话，而不是桥接），检查是否在一个子网内（主机，vmware，虚拟机），还有网关是否相同。之后如果大家采用的是虚拟机的静态网络配置的话，一定要注意我上面说的内容，虚拟机ip只要在子网里就行。这里就不贴图了，大家应该都能get到这些点吧。</p>
-<p>上述排查了之后没问题但还是连不了网的时候，看一下的vmware nat 和 dhcp(不知道这个有没有必要开)具体的话，win+r , 输入service.msc（好像是这个命令）, 找到上述这俩个任务，启动如果启动不了的话，回到vmware虚拟编辑网络设置里，恢复默认配置（需要你关闭虚拟机),恢复了好了之后<strong>子网号和网关都会发生变化</strong>（要注意），然后肯定就能没问题了.</p>
+            <h2 id="linux-目录的结构和功能"><a href="#linux-目录的结构和功能" class="headerlink" title="linux 目录的结构和功能"></a>linux 目录的结构和功能</h2><table>
+<thead>
+<tr>
+<th>目录</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/bin</td>
+<td>存放二进制可执行文件(ls,cat,<a class="link"   target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=mkdir" >mkdir<i class="fas fa-external-link-alt"></i></a>等)，常用命令一般都在这里。</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>存放系统管理和配置文件</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>存放所有用户文件的根目录，是用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>用于存放系统应用程序，比较重要的目录/usr/local 本地系统管理员软件安装目录（安装系统级的应用）。这是最庞大的目录，要用到的应用程序和文件几乎都在这个目录。相当于C盘，而local相当于C盘里的program file</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>额外安装的可选应用程序包所放置的位置。一般情况下，我们可以把tomcat等都安装到这里。相当于D盘的software</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>虚拟文件系统目录，是系统内存的映射。可直接访问这个目录来获取系统信息。</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>超级用户（系统管理员）的主目录（特权阶级^o^）</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>存放二进制可执行文件，只有root才能访问。这里存放的是系统管理员使用的系统级别的管理命令和程序。如ifconfig等。</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>用于存放设备文件。</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>系统管理员安装临时文件系统的安装点，系统提供这个目录是让用户临时挂载其他的文件系统。</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>存放用于系统引导时使用的各种文件</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>存放跟文件系统中的程序运行所需要的共享库及内核模块。共享库又叫动态链接共享库，作用类似windows里的.dll文件，存放了根文件系统程序运行所需的共享文件。</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>用于存放各种临时文件，是公用的临时文件存储点。</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>用于存放运行时需要改变数据的文件，也是某些大文件的溢出区，比方说各种服务的日志文件（系统启动日志等。）等。</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里</td>
+</tr>
+</tbody></table>
+<p>目录树结构：</p>
+<p><img src="C:\Users\16683\AppData\Roaming\Typora\typora-user-images\image-20211231095529980.png" alt="image-20211231095529980"></p>
 
         </div>
 
         
 
-        
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/Linux/">#Linux</a>&nbsp;
-                    </li>
-                
-            </ul>
         
 
         
@@ -190,7 +236,7 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2021/12/31/Python%20%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D/"
+                           href="/2022/01/01/%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
@@ -202,6 +248,21 @@
                         </a>
                     </div>
                 
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/12/31/Python%20%20%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
                 
             </div>
         
